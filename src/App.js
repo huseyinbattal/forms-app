@@ -4,13 +4,19 @@ function App() {
     {
       field: "userName",
       hasError: false,
-      label:"User Name"
+      label: "User Name",
+      isRequired: false,
+      type: "text",
+      value:"",
     },
 
     {
       field: "userPassword",
       hasError: false,
-      label:"Password"
+      label: "Password",
+      isRequired: true,
+      type: "password",
+      value:"",
     },
   ]);
   const [formModel, setFormModel] = useState({
@@ -24,23 +30,26 @@ function App() {
   });
 
   const onChange = (value, field) => {
-    setFormModel({
-      ...formModel,
-      [field]: value,
-    });
+    const stateCopy=[...formState]
+    const findedIndex = formState.findIndex((item) => item.field === field)
+    stateCopy[findedIndex].value = value
+    setFormState(stateCopy)
+    // setFormModel({...formModel,[field]: value,});
   };
 
   const formValidation = (e) => {
     e.preventDefault();
-    const obj = {
-      userName: formModel.userName.trim() === "",
-      userPassword: formModel.userPassword.trim() === "",
-    };
-    setFormErrorModel(obj);
-    if (Object.values(obj).includes(true)) {
-      alert("Error");
-      return;
-    }
+    // const obj = {
+    //   userName: formModel.userName.trim() === "",
+    //   userPassword: formModel.userPassword.trim() === "",
+    // };
+    // setFormErrorModel(obj);
+    // if (Object.values(obj).includes(true)) {
+    //   alert("Error");
+    //   return;
+    // }
+    const stateCopy = [...formState]
+    const newArr=stateCopy.map()
     sendFormRequest();
   };
 
@@ -63,19 +72,20 @@ function App() {
                 htmlFor="userName"
                 className="block text-gray-800 text-sm font-bold mb-4"
               >
-                {item.label} <span className="text-red-500">*</span>
+                {item.label} {item.isRequired && <span className="text-red-500">*</span>}
               </label>
-              <input
+                <input
+                  type={item.type}
                 onChange={(e) => {
-                  onChange(e.target.value, "userName");
+                  onChange(e.target.value, item.field);
                 }}
-                value={formModel.userName}
-                name="userName"
+                value={item.value}
+                name={item.field}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 focus:outline-none focus:shadow-violet-600"
               />
-              {formErrorModel.userName && (
+              {item.hasError && (
                 <p className="text-red-500 text-xs italic mt-3">
-                  Bu alan zorunludur{" "}
+                  This {item.field} is required!
                 </p>
               )}
             </div>
