@@ -133,7 +133,7 @@ function App() {
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm 
           cursor-pointer focus:outline-none focus:shadow-blue-500 py-2 px-4 rounded w-full"
             >
-              Giriş
+              Submit
             </button>
           </div>
         </form>
