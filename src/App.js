@@ -1,4 +1,22 @@
+import { useState } from "react";
 function App() {
+  const [formModel, setFormModel] = useState({
+    userName: "",
+    userPassword:"",
+  });
+
+  const [formErrorModel, setFormErrorModel] = useState({
+    userName: false,
+    userPassword:false,
+  })
+
+  const onChange = (value,field) => {
+    setFormErrorModel({
+      ...formModel,
+      [field]: value
+  })
+}
+
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gray-400">
        <div className="w-full max-w-xs">
@@ -10,7 +28,11 @@ function App() {
           >
             Kullanıcı adı <span className="text-red-500">*</span>
           </label>
-          <input
+            <input
+              onChange={(e) => {
+                onChange(e.target.value,'userName')
+              }}
+              value={formModel.userName}
             name="userName"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 focus:outline-none focus:shadow-violet-600"
             />
@@ -23,7 +45,11 @@ function App() {
           >
             Parola <span className="text-red-500">*</span>
           </label>
-          <input
+            <input
+              onChange={(e) => {
+                onChange(e.target.value,'userPassword')
+              }}
+              value={formModel.userPassword}
             name="password"
             type="password"
             placeholder="**********"
