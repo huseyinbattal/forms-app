@@ -17,10 +17,33 @@ function App() {
     });
   };
 
+  const formValidation = (e) => {
+    e.preventDefault();
+    const obj = {
+      userName:formModel.userName.trim()==="",
+      userPassword:formModel.userPassword.trim()==="",
+    }
+    setFormErrorModel(obj)
+    if (Object.values(obj).includes(true)) {
+      alert("Error")
+      return
+    }
+   sendFormRequest()
+  };
+
+  const sendFormRequest = () => {
+    setTimeout(() => {
+      alert( "Kullanıcı girişi başarılı")
+    }, 2000);
+  }
+
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gray-400">
       <div className="w-full max-w-xs">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={formValidation}
+        >
           <div className="mb-4">
             <label
               htmlFor="userName"
@@ -36,9 +59,11 @@ function App() {
               name="userName"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 focus:outline-none focus:shadow-violet-600"
             />
-            {formErrorModel.userName &&
-              <p className="text-red-500 text-xs italic mt-3">Bu alan zorunludur </p>
-              }
+            {formErrorModel.userName && (
+              <p className="text-red-500 text-xs italic mt-3">
+                Bu alan zorunludur{" "}
+              </p>
+            )}
           </div>
           <div className="mb-6">
             <label
@@ -58,13 +83,15 @@ function App() {
               className="shadow appearance-none border rounded w-full py-2 px-3
              text-gray-800 focus:outline-none focus:shadow-violet-600"
             />
-            <p className="mt-3 text-red-500 text-xs italic">
-              Bu alan zorunludur
-            </p>
+            {formErrorModel.userPassword && (
+              <p className="text-red-500 text-xs italic mt-3">
+                Bu alan zorunludur{" "}
+              </p>
+            )}
           </div>
           <div className="flex items-center justify-center">
             <button
-              type="button"
+              type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm 
           cursor-pointer focus:outline-none focus:shadow-blue-500 py-2 px-4 rounded w-full"
             >
