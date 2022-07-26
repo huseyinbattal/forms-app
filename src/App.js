@@ -11,7 +11,7 @@ function App() {
   })
 
   const onChange = (value,field) => {
-    setFormErrorModel({
+    setFormModel({
       ...formModel,
       [field]: value
   })
