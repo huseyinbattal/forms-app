@@ -7,7 +7,7 @@ function App() {
       label: "User Name",
       isRequired: false,
       type: "text",
-      value:"",
+      value: "",
     },
 
     {
@@ -16,7 +16,7 @@ function App() {
       label: "Password",
       isRequired: true,
       type: "password",
-      value:"",
+      value: "",
     },
   ]);
   const [formModel, setFormModel] = useState({
@@ -30,10 +30,10 @@ function App() {
   });
 
   const onChange = (value, field) => {
-    const stateCopy=[...formState]
-    const findedIndex = formState.findIndex((item) => item.field === field)
-    stateCopy[findedIndex].value = value
-    setFormState(stateCopy)
+    const stateCopy = [...formState];
+    const findedIndex = formState.findIndex((item) => item.field === field);
+    stateCopy[findedIndex].value = value;
+    setFormState(stateCopy);
     // setFormModel({...formModel,[field]: value,});
   };
 
@@ -48,9 +48,18 @@ function App() {
     //   alert("Error");
     //   return;
     // }
-    const stateCopy = [...formState]
-    const newArr=stateCopy.map()
-    sendFormRequest();
+    const stateCopy = [...formState];
+    const newArr = stateCopy.map((item) => {
+      if (item.isRequired && item.value.trim() === "") {
+        return {
+          ...item,
+          hasError: true,
+        };
+      }
+      return item;
+    });
+    setFormState(newArr)
+    //sendFormRequest();
   };
 
   const sendFormRequest = () => {
@@ -64,34 +73,36 @@ function App() {
       <div className="w-full max-w-xs">
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={formValidation}>
+          onSubmit={formValidation}
+        >
           {formState.map((item) => {
             return (
-              <div className="mb-4">
-              <label
-                htmlFor="userName"
-                className="block text-gray-800 text-sm font-bold mb-4"
-              >
-                {item.label} {item.isRequired && <span className="text-red-500">*</span>}
-              </label>
+              <div className="mb-4" key={item.field}>
+                <label
+                  htmlFor="userName"
+                  className="block text-gray-800 text-sm font-bold mb-4"
+                >
+                  {item.label}{" "}
+                  {item.isRequired && <span className="text-red-500">*</span>}
+                </label>
                 <input
                   type={item.type}
-                onChange={(e) => {
-                  onChange(e.target.value, item.field);
-                }}
-                value={item.value}
-                name={item.field}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 focus:outline-none focus:shadow-violet-600"
-              />
-              {item.hasError && (
-                <p className="text-red-500 text-xs italic mt-3">
-                  This {item.field} is required!
-                </p>
-              )}
-            </div>
-            )
+                  onChange={(e) => {
+                    onChange(e.target.value, item.field);
+                  }}
+                  value={item.value}
+                  name={item.field}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 focus:outline-none focus:shadow-violet-600"
+                />
+                {item.hasError && (
+                  <p className="text-red-500 text-xs italic mt-3">
+                    This {item.field} is required!
+                  </p>
+                )}
+              </div>
+            );
           })}
-        
+
           {/* <div className="mb-4">
             <label
               htmlFor="userName"
