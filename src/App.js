@@ -58,7 +58,9 @@ function App() {
       }
       return item;
     });
-    setFormState(newArr)
+    setFormState(newArr);
+    const isExistError = newArr.filter((item) => item.hasError)
+    alert(isExistError.length)
     //sendFormRequest();
   };
 
@@ -96,7 +98,7 @@ function App() {
                 />
                 {item.hasError && (
                   <p className="text-red-500 text-xs italic mt-3">
-                    This {item.field} is required!
+                    {item.label} is required!
                   </p>
                 )}
               </div>
