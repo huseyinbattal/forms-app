@@ -56,18 +56,26 @@ function App() {
           hasError: true,
         };
       }
-      return item;
+      return {
+        ...item,
+        hasError:false
+      }
     });
+    console.log(newArr)
     setFormState(newArr);
     const isExistError = newArr.filter((item) => item.hasError)
-    alert(isExistError.length)
-    //sendFormRequest();
+    if (isExistError.length) {
+      alert("There is an error!")
+      return
+    }
+   
+    sendFormRequest();
   };
 
   const sendFormRequest = () => {
     setTimeout(() => {
-      alert("Kullanıcı girişi başarılı");
-    }, 2000);
+      alert("Success");
+    }, 1000);
   };
 
   return (
